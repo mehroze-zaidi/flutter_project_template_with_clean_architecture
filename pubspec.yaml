@@ -67,6 +67,9 @@ flutter_icons:
 
 
 scripts:
+
+  #To change package name: dart run change_app_package_name:main com.new.package.name
+  #To rename app name:  dart run rename_app:main all="My App Name"
   generate_icons: flutter pub run flutter_launcher_icons
   generate_files: dart run build_runner build --delete-conflicting-outputs
   watch: dart run build_runner build watch --delete-conflicting-outputs
