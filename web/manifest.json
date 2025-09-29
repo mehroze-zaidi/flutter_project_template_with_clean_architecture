@@ -1,11 +1,11 @@
 {
-    "name": "flutter_new_project_template_with_riverpod",
-    "short_name": "flutter_new_project_template_with_riverpod",
+    "name": "untitled",
+    "short_name": "untitled",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Flutter template to help devs start building apps faster than ever. It includes general usecases for projects.",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
