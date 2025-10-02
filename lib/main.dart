@@ -1,33 +1,21 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:fedman_admin_app/core/utils/managers/google_signin_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_new_project_template_with_riverpod/core/constants/app_theme.dart';
-import 'package:flutter_new_project_template_with_riverpod/presentation/screens/splash/splash_screen.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:fedman_admin_app/presentation/app/fedman_admin.dart';
+
+import 'core/di/injection.dart';
+
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+   await setupDependencyInjection();
+  runApp(EasyLocalization(    supportedLocales: const [Locale('en', 'US'), Locale('it', 'IT')],
+      path: 'assets/translations', // <-- change the path of the translation files
+      fallbackLocale: const Locale('en', 'US'),child:  const FedmanAdminApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return MaterialApp(
-          title: 'Flutter Flash Template',
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          home: const SplashScreen(),
-        );
-      },
-
-    );
-  }
-}
 
 

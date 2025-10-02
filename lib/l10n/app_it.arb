@@ -1,0 +1,218 @@
+{
+  "@@locale": "it",
+  "@@last_modified": "2025-09-05T00:00:00.000Z",
+
+  "appName": "FEDMAN",
+  "@appName": { "description": "The name of the application" },
+
+  "welcome": "Benvenuto!",
+  "@welcome": { "description": "Welcome message" },
+
+  "yourAllInOneSportsFedrationApp": "La tua app tutto-in-uno per le federazioni sportive",
+  "@yourAllInOneSportsFedrationApp": { "description": "Subtitle on welcome page" },
+
+  "signUpWithApple": "Registrati con Apple",
+  "@signUpWithApple": { "description": "Apple sign up button text" },
+
+  "signUpWithGoogle": "Registrati con Google",
+  "@signUpWithGoogle": { "description": "Google sign up button text" },
+
+  "alreadyHaveAnAccount": "Hai già un account?",
+  "@alreadyHaveAnAccount": { "description": "Prompt for existing account" },
+
+  "logIn": "Accedi",
+  "@logIn": { "description": "Login button text" },
+
+  "login": "Accedi",
+  "signUp": "Iscrizione",
+  "register": "Registrati",
+  "@register": { "description": "Register button text" },
+
+  "email": "Email",
+  "@email": { "description": "Email field label" },
+
+  "password": "Password",
+  "@password": { "description": "Password field label" },
+
+  "forgotPassword": "Password dimenticata?",
+  "@forgotPassword": { "description": "Forgot password link text" },
+
+  "resetPassword": "Reimposta Password",
+  "@resetPassword": { "description": "Reset password button text" },
+
+  "resetPasswordEmail": "Reimposta Password",
+  "@resetPasswordEmail": { "description": "Reset password email page title" },
+
+  "resetPasswordPhone": "Reimposta Password",
+  "@resetPasswordPhone": { "description": "Reset password phone page title" },
+
+  "setNewPassword": "Imposta nuova password",
+  "@setNewPassword": { "description": "Set new password page title" },
+
+  "setPasswordDescription": "Impostiamo una nuova password per continuare!",
+  "@setPasswordDescription": { "description": "Set new password subtitle" },
+
+  "signInWithGoogle": "Accedi con Google",
+  "@signInWithGoogle": { "description": "Google sign in button text" },
+
+  "congratulations": "Congratulazioni!",
+  "@congratulations": { "description": "Congratulations message" },
+
+  "profileSetupComplete": "Fantastico! Hai completato la configurazione del tuo profilo su FEDMAN.",
+  "@profileSetupComplete": { "description": "Profile setup completion message" },
+
+  "googleSignInCancelled": "L'accesso con Google è stato annullato o non è riuscito. Riprova.",
+  "@googleSignInCancelled": { "description": "Error message when Google Sign-In is cancelled" },
+
+  "failedToGetIdToken": "Impossibile ottenere il token ID da Google. Riprova.",
+  "@failedToGetIdToken": { "description": "Error message when ID token retrieval fails" },
+
+  "signInFailed": "Accesso fallito",
+  "@signInFailed": { "description": "Generic sign-in failure message" },
+
+  "invalidResetCode": "Codice di reset non valido",
+  "@invalidResetCode": { "description": "Error message for invalid reset code" },
+
+  "socialLoginError": "Errore accesso social:",
+  "@socialLoginError": { "description": "Social login error prefix" },
+
+  "phone": "Telefono",
+  "@phone": { "description": "Phone tab label" },
+
+  "logInToYourAccount": "Accedi al tuo account e resta in contatto con FEDMAN!",
+  "@logInToYourAccount": { "description": "Login page subtitle" },
+
+  "yourEmail": "La tua Email",
+  "@yourEmail": { "description": "Email field title" },
+
+  "emailHint": "JhonDoe@mail.com",
+  "@emailHint": { "description": "Email field hint text" },
+
+  "yourPassword": "La tua Password",
+  "@yourPassword": { "description": "Password field title" },
+
+  "passwordHint": "inserisci la tua password",
+  "@passwordHint": { "description": "Password field hint text" },
+
+  "reset": "Reimposta",
+  "@reset": { "description": "Reset password link text" },
+
+  "loggingIn": "Accesso in corso...",
+  "@loggingIn": { "description": "Login button loading text" },
+
+  "dontHaveAccount": "Non hai un account? ",
+  "@dontHaveAccount": { "description": "Register link prefix" },
+
+  "createOne": "Creane uno",
+  "@createOne": { "description": "Register link text" },
+
+  "languageLabel": "Lingua: Italiano (Cambia)",
+  "@languageLabel": { "description": "Language selection label" },
+
+  "phoneNumber": "Numero di Telefono",
+  "@phoneNumber": { "description": "Phone number field title" },
+
+  "createAccount": "Crea un Account",
+  "@createAccount": { "description": "Register page title" },
+
+  "registerSubtitle": "Registrati semplicemente per continuare il tuo viaggio con noi e sbloccare tutte le funzionalità entusiasmanti che abbiamo da offrire!",
+  "@registerSubtitle": { "description": "Register page subtitle" },
+
+  "yourFullName": "Il tuo Nome Completo",
+  "@yourFullName": { "description": "Full name field title" },
+
+  "fullNameHint": "Mario Rossi",
+  "@fullNameHint": { "description": "Full name field hint" },
+
+  "yourEmailInfo": "La tua Email",
+  "@yourEmailInfo": { "description": "Email field title in register" },
+
+  "emailInfoHint": "Inserisci il tuo indirizzo email",
+  "@emailInfoHint": { "description": "Email field hint in register" },
+
+  "createPassword": "Crea una password",
+  "@createPassword": { "description": "Create password field title" },
+
+  "confirmPassword": "Conferma Password",
+  "@confirmPassword": { "description": "Confirm password field title" },
+
+  "confirmPasswordHint": "reinserisci la tua password",
+  "@confirmPasswordHint": { "description": "Confirm password field hint" },
+
+  "loading": "Caricamento...",
+  "@loading": { "description": "Generic loading text" },
+
+  "continueText": "Continua",
+  "@continueText": { "description": "Continue button text" },
+
+  "welcomeToFedman": "Benvenuto su FEDMAN",
+  "@welcomeToFedman": { "description": "Success page title" },
+
+  "successMessage": "Fantastico! Il tuo account è tutto configurato. Tuffiamoci nel gioco e scopriamo eventi, classifiche e altro ancora!",
+  "@successMessage": { "description": "Success page message" },
+
+  "continueToDashboard": "Continua alla Dashboard",
+  "@continueToDashboard": { "description": "Continue to dashboard button" },
+
+  "emailRequired": "Email richiesta",
+  "@emailRequired": { "description": "Email validation error" },
+
+  "enterValidEmail": "Inserisci un'email valida",
+  "@enterValidEmail": { "description": "Email format validation error" },
+
+  "passwordRequired": "Password richiesta",
+  "@passwordRequired": { "description": "Password validation error" },
+
+  "passwordMinLength": "La password deve essere di almeno 6 caratteri",
+  "@passwordMinLength": { "description": "Password length validation error" },
+
+  "fullNameRequired": "Nome completo richiesto",
+  "@fullNameRequired": { "description": "Full name validation error" },
+
+  "confirmPasswordRequired": "Conferma la tua password",
+  "@confirmPasswordRequired": { "description": "Confirm password validation error" },
+
+  "passwordsDoNotMatch": "Le password non corrispondono",
+  "@passwordsDoNotMatch": { "description": "Password match validation error" },
+
+  "chooseYourLanguage": "Scegli la tua lingua",
+  "@chooseYourLanguage": { "description": "Language selection page title" },
+
+  "whichLanguageDoYouWantToUseForThisApp": "Quale lingua vuoi usare per questa app?",
+  "@whichLanguageDoYouWantToUseForThisApp": { "description": "Language selection page subtitle" },
+
+  "english": "English",
+  "@english": { "description": "English language option" },
+
+  "italia": "Italiano",
+  "@italia": { "description": "Italian language option" },
+
+  "swipeToContinue": "Scorri per continuare",
+  "@swipeToContinue": { "description": "Continue button text" },
+
+  "youCanChangeTheLanguageInSettings": "Puoi cambiare la lingua nelle impostazioni",
+  "@youCanChangeTheLanguageInSettings": { "description": "Language change info text" },
+
+  "languageChangedToEnglish": "Lingua cambiata in Inglese",
+  "@languageChangedToEnglish": { "description": "Language changed to English message" },
+
+  "languageChangedToItalian": "Lingua cambiata in Italiano",
+  "@languageChangedToItalian": { "description": "Language changed to Italian message" },
+
+  "next": "Avanti",
+  "@next": { "description": "Next button in profile completion" },
+
+  "languageDetection": "Rilevamento lingua",
+  "@languageDetection": { "description": "Title for language detection screen" },
+
+  "weAreDetectingYourLanguage": "Stiamo rilevando la tua lingua...",
+  "@weAreDetectingYourLanguage": { "description": "Subtitle while detecting language" },
+
+  "detected": "Rilevato:",
+  "@detected": { "description": "Detected label" },
+
+  "isThisYourPreferredLanguage": "È la tua lingua preferita?",
+  "changeLanguage": "Cambia lingua",
+  "confirmLanguage": "Conferma Lingua",
+  "defaultLanguage": "Lingua Predefinita"
+}

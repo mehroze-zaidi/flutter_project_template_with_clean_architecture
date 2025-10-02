@@ -1,5 +1,9 @@
+
 import 'package:flutter/material.dart';
-import 'package:flutter_new_project_template_with_riverpod/core/constants/app_colors.dart';
+
+import '../constants/app_colors.dart';
+
+
 
 
 class RoundedContainerWidget extends StatelessWidget {
@@ -20,22 +24,21 @@ class RoundedContainerWidget extends StatelessWidget {
   final BorderRadiusGeometry? borderRadiusGeometry;
   final double? borderSideAlignment;
   const RoundedContainerWidget(
-      {Key? key,
+      {super.key,
       this.child,
       this.width,
       this.height,
       this.borderColor ,
         this.gradient,
       this.color,
-      this.blurRadius = 15,
+      this.blurRadius = 12,
       this.spreadRadius = 0,
       this.borderRadius = 12,
       this.borderWidth = 1,
       this.showBorder = true,
       this.shadowOffset,
       this.shadowColor,
-      this.borderRadiusGeometry,this.showShadow=true,this.borderSideAlignment})
-      : super(key: key);
+      this.borderRadiusGeometry,this.showShadow=true,this.borderSideAlignment});
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +49,20 @@ class RoundedContainerWidget extends StatelessWidget {
 
 
       decoration: BoxDecoration(
-          color: color ??  AppColors.whiteTxtColor,
+          color: color ??  AppColors.baseWhiteColor,
           gradient:gradient ,
           boxShadow: showShadow ? [
             BoxShadow(
-              color: shadowColor ?? AppColors.blackTxtColor,
+              color: shadowColor ?? AppColors.baseBlackColor.withValues(alpha: .2),
               blurRadius: blurRadius,
               spreadRadius: spreadRadius,
-              offset: shadowOffset ?? const Offset(0, 1),
+              offset: shadowOffset ?? const Offset(0, 3),
             )
           ]:null,
           border: showBorder!
               ? Border.all(
-            strokeAlign:this.borderSideAlignment ?? BorderSide.strokeAlignInside,
-                  color:  borderColor??  AppColors.whiteTxtColor,
+            strokeAlign:borderSideAlignment ?? BorderSide.strokeAlignInside,
+                  color:  borderColor??  AppColors.baseWhiteColor,
                   width:   borderWidth )
               : null,
           borderRadius: borderRadiusGeometry ?? BorderRadius.all(Radius.circular(borderRadius))),

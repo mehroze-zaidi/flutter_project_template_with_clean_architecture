@@ -19,7 +19,6 @@ class ScreenBody extends StatelessWidget {
       appBar: appBar,
 
       body: SafeArea(
-          top: false,
           child: enableScroll
               ? SingleChildScrollView(
 

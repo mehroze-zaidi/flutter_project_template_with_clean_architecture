@@ -1,4 +1,4 @@
-# flutter_new_project_template_with_riverpod
+# fedman_admin_app
 
 Flutter template to help devs start building apps faster than ever. It includes general usecases for projects.
 

@@ -1,4 +1,4 @@
-name: flutter_new_project_template_with_riverpod
+name: fedman_admin_app
 description: "Flutter template to help devs start building apps faster than ever. It includes general usecases for project"
 
 publish_to: 'none'
@@ -7,7 +7,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.8.1
 
 
 
@@ -17,10 +17,26 @@ dependencies:
   
   cupertino_icons: ^1.0.8
   rename_app: ^1.6.1
-  flutter_scripts: ^0.0.3
+  flutter_scripts:
+    git: https://github.com/mehroze-zaidi/flutter_scripts.git
   change_app_package_name: ^1.5.0
   lottie: ^3.0.0
   flutter_screenutil: ^5.9.3
+  go_router: ^16.2.4
+  easy_localization: ^3.0.8
+  flutter_svg: ^2.2.1
+  fluttertoast: ^9.0.0
+  dio: ^5.9.0
+  logger: ^2.6.1
+  get_it: ^8.2.0
+  google_sign_in: ^7.2.0
+  google_sign_in_web: ^1.1.0
+  flutter_bloc: ^9.1.1
+  json_annotation: ^4.9.0
+  shared_preferences: ^2.5.3
+  shimmer: ^3.0.0
+  intl_phone_field: ^3.2.0
+  cached_network_image: ^3.4.1
 
 
 
@@ -28,8 +44,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
-
+  flutter_lints: ^6.0.0
+  build_runner: ^2.6.0
+  json_serializable: ^6.10.0
+  freezed: ^3.2.0
+  flutter_launcher_icons: ^0.14.4
 
 
 flutter:
@@ -38,23 +57,24 @@ flutter:
 
     - assets/images/
     - assets/animations/
+    - assets/translations/
 
   fonts:
-    - family: Cairo
+    - family: Poppins
       fonts:
-        - asset: assets/fonts/Cairo-ExtraLight.ttf
+        - asset: assets/fonts/poppins/Poppins-ExtraLight.ttf
           weight: 200
-        - asset: assets/fonts/Cairo-Light.ttf
+        - asset: assets/fonts/poppins/Poppins-Light.ttf
           weight: 300
-        - asset: assets/fonts/Cairo-Regular.ttf
+        - asset: assets/fonts/poppins/Poppins-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Cairo-Medium.ttf
+        - asset: assets/fonts/poppins/Poppins-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Cairo-SemiBold.ttf
+        - asset: assets/fonts/poppins/Poppins-SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/Cairo-Bold.ttf
+        - asset: assets/fonts/poppins/Poppins-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Cairo-ExtraBold.ttf
+        - asset: assets/fonts/poppins/Poppins-ExtraBold.ttf
           weight: 800
 
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_new_project_template_with_riverpod/core/constants/app_colors.dart';
+import 'package:fedman_admin_app/core/constants/app_colors.dart';
 
 class AppTheme {
   AppTheme._();
@@ -10,12 +10,12 @@ class AppTheme {
     brightness: Brightness.light,
     colorScheme: ColorScheme.light(primary: AppColors.primaryColor),
 
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: AppColors.neutral50,
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.primaryColor,
       titleTextStyle: const TextStyle(color: AppColors.blackTxtColor),
     ),
-
+dividerTheme: DividerThemeData(color: AppColors.neutral200,endIndent: 20,indent: 20),
     textTheme: TextTheme(
       bodyLarge: TextStyle(
         color: AppColors.blackTxtColor,

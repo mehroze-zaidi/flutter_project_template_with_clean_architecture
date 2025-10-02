@@ -4,7 +4,7 @@ project(runner LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "flutter_new_project_template_with_riverpod")
+set(BINARY_NAME "fedman_admin_app")
 # The unique GTK application identifier for this application. See:
 # https://wiki.gnome.org/HowDoI/ChooseApplicationID
 set(APPLICATION_ID "com.menroo.flutter_template_with_riverpod.flutter_new_project_template_with_riverpod")
