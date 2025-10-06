@@ -1,4 +1,8 @@
+import 'package:fedman_admin_app/core/constants/app_assets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dropzone/flutter_dropzone.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/extensions/space.dart';
@@ -8,17 +12,26 @@ class FileUploadWidget extends StatelessWidget {
   final String title;
   final String description;
   final VoidCallback? onTap;
-  final bool hasFile;
   final String? fileName;
+  final Function(DropzoneFileInterface)? onDropFile;
+  final Function(DropzoneViewController)? onControllerCreated;
+  final String? fileUrl;
+  final bool isLogo;
 
   const FileUploadWidget({
     super.key,
     required this.title,
     required this.description,
     this.onTap,
-    this.hasFile = false,
     this.fileName,
+    this.onDropFile,
+    this.onControllerCreated,
+    this.fileUrl,
+    this.isLogo = false,
   });
+
+  @override
+  bool get hasFile => fileName != null && fileName!.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -32,22 +45,24 @@ class FileUploadWidget extends StatelessWidget {
           ),
         ),
         12.verticalSpace,
-        GestureDetector(
-          onTap: onTap,
-          child: Container(
-            width: double.infinity,
-            height: 120,
-            decoration: BoxDecoration(
-              color: AppColors.baseWhiteColor,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: AppColors.greyColor.withValues(alpha: 0.3),
-                style: BorderStyle.solid,
+        if (kIsWeb && onDropFile != null && onControllerCreated != null)
+          _buildDropzoneArea()
+        else
+          GestureDetector(
+            onTap: onTap,
+            child: Container(
+              width: double.infinity,
+              height: 120,
+              decoration: BoxDecoration(
+                color: AppColors.neutral50,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: AppColors.neutral200,
+                ),
               ),
+              child: hasFile ? _buildFilePreview() : _buildUploadPrompt(),
             ),
-            child: hasFile ? _buildFilePreview() : _buildUploadPrompt(),
           ),
-        ),
         8.verticalSpace,
         Text(
           description,
@@ -64,22 +79,10 @@ class FileUploadWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: AppColors.positiveColor.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Icon(
-            Icons.upload_outlined,
-            color: AppColors.positiveColor,
-            size: 20,
-          ),
-        ),
+        SvgPicture.asset(AppAssets.fileUploadIcon,width: 40,height: 40,),
         8.verticalSpace,
         Text(
-          title.contains('Logo') ? 'Upload logo' : 'Upload Documents',
+          isLogo ? 'Upload/Drag & Drop logo' : 'Upload/Drag & Drop Documents',
           style: AppTextStyles.body2.copyWith(
             color: AppColors.baseBlackColor,
             fontWeight: FontWeight.w500,
@@ -90,16 +93,33 @@ class FileUploadWidget extends StatelessWidget {
   }
 
   Widget _buildFilePreview() {
+    final showImagePreview = isLogo && fileUrl != null && fileUrl!.isNotEmpty;
+    
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            title.contains('Logo') ? Icons.image_outlined : Icons.description_outlined,
-            color: AppColors.positiveColor,
-            size: 24,
-          ),
+          if (showImagePreview)
+            Image.network(
+              fileUrl!,
+              height: 50,
+              width: 50,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(
+                  Icons.image_outlined,
+                  color: AppColors.positiveColor,
+                  size: 24,
+                );
+              },
+            )
+          else
+            Icon(
+              isLogo ? Icons.image_outlined : Icons.description_outlined,
+              color: AppColors.positiveColor,
+              size: 24,
+            ),
           8.verticalSpace,
           Text(
             fileName ?? 'File uploaded',
@@ -121,6 +141,39 @@ class FileUploadWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildDropzoneArea() {
+    return Stack(
+      children: [
+        SizedBox(
+          height: 120,
+          child: DropzoneView(
+            onCreated: (ctrl) {
+              if (onControllerCreated != null) {
+                onControllerCreated!(ctrl);
+              }
+            },
+            onDropFile: onDropFile,
+          ),
+        ),
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            width: double.infinity,
+            height: 120,
+            decoration: BoxDecoration(
+              color: AppColors.neutral50,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: AppColors.neutral200,
+              ),
+            ),
+            child: hasFile ? _buildFilePreview() : _buildUploadPrompt(),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -30,11 +30,13 @@ class FederationFilterDropdown extends StatelessWidget {
         color: AppColors.baseWhiteColor,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: AppColors.greyColor.withOpacity(0.3),
+          color: AppColors.neutral200
         ),
       ),
       child: DropdownButtonHideUnderline(
+
         child: DropdownButton<String>(
+
           value: selectedValue,
           hint: Row(
             children: [

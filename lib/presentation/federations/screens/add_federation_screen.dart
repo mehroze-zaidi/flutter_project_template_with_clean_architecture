@@ -1,5 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fedman_admin_app/core/common_widgets/common_widgets_barrel.dart';
+import 'package:fedman_admin_app/core/navigation/route_name.dart';
+import 'package:fedman_admin_app/core/utils/snackbar_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/common_widgets/custom_buttons.dart';
@@ -8,6 +13,7 @@ import '../../../core/common_widgets/screen_body.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/extensions/space.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../widgets/federation_added_successfully_dialog_widget.dart';
 import '../widgets/federation_filter_dropdown.dart';
 import '../widgets/federation_type_selector.dart';
 import '../widgets/file_upload_widget.dart';
@@ -29,8 +35,16 @@ class _AddFederationScreenState extends State<AddFederationScreen> {
   final ValueNotifier<String?> _selectedCityNotifier = ValueNotifier(null);
   final ValueNotifier<bool> _hasLogoNotifier = ValueNotifier(false);
   final ValueNotifier<bool> _hasDocumentsNotifier = ValueNotifier(false);
-  final ValueNotifier<String?> _logoFileNameNotifier = ValueNotifier(null);
-  final ValueNotifier<String?> _documentsFileNameNotifier = ValueNotifier(null);
+  
+  String? _logoFileName;
+  String? _documentsFileName;
+  DropzoneFileInterface? _logoFile;
+  DropzoneFileInterface? _documentsFile;
+  String? _logoFileUrl;
+  String? _documentsFileUrl;
+  
+  DropzoneViewController? _logoDropzoneController;
+  DropzoneViewController? _documentsDropzoneController;
 
   final List<String> _countries = [
     'Select country',
@@ -165,17 +179,15 @@ class _AddFederationScreenState extends State<AddFederationScreen> {
                     ValueListenableBuilder<bool>(
                       valueListenable: _hasLogoNotifier,
                       builder: (context, hasLogo, child) {
-                        return ValueListenableBuilder<String?>(
-                          valueListenable: _logoFileNameNotifier,
-                          builder: (context, fileName, child) {
-                            return FileUploadWidget(
-                              title: 'Federation Logo',
-                              description: 'PNG, JPG up to 2MB. Recommended size: 200x200px',
-                              hasFile: hasLogo,
-                              fileName: fileName,
-                              onTap: _handleLogoUpload,
-                            );
-                          },
+                        return FileUploadWidget(
+                          title: 'Federation Logo',
+                          description: 'PNG, JPG up to 5MB. Recommended size: 500x500px. Drag and drop supported on web.',
+                          fileName: _logoFileName,
+                          fileUrl: _logoFileUrl,
+                          isLogo: true,
+                          onTap: _handleLogoUpload,
+                          onDropFile: kIsWeb ? _handleLogoDrop : null,
+                          onControllerCreated: kIsWeb ? (controller) => _logoDropzoneController = controller : null,
                         );
                       },
                     ),
@@ -183,17 +195,14 @@ class _AddFederationScreenState extends State<AddFederationScreen> {
                     ValueListenableBuilder<bool>(
                       valueListenable: _hasDocumentsNotifier,
                       builder: (context, hasDocuments, child) {
-                        return ValueListenableBuilder<String?>(
-                          valueListenable: _documentsFileNameNotifier,
-                          builder: (context, fileName, child) {
-                            return FileUploadWidget(
-                              title: 'Federation Documents',
-                              description: 'Upload statutes, rules, and other federation documents (PDF)',
-                              hasFile: hasDocuments,
-                              fileName: fileName,
-                              onTap: _handleDocumentsUpload,
-                            );
-                          },
+                        return FileUploadWidget(
+                          title: 'Federation Documents',
+                          description: 'Upload statutes, rules, and other federation documents (PDF). Drag and drop supported on web.',
+                          fileName: _documentsFileName,
+                          isLogo: false,
+                          onTap: _handleDocumentsUpload,
+                          onDropFile: kIsWeb ? _handleDocumentsDrop : null,
+                          onControllerCreated: kIsWeb ? (controller) => _documentsDropzoneController = controller : null,
                         );
                       },
                     ),
@@ -204,10 +213,10 @@ class _AddFederationScreenState extends State<AddFederationScreen> {
                   children: [
                     Expanded(
                       child: CustomButton(
+                        isSecondaryBtn: true,
                         title: 'Cancel',
-                        buttonColor: AppColors.baseWhiteColor,
+
                         titleColor: AppColors.baseBlackColor,
-                        borderColor: AppColors.greyColor.withValues(alpha: 0.3),
                         onTap: _handleCancel,
                       ),
                     ),
@@ -228,18 +237,157 @@ class _AddFederationScreenState extends State<AddFederationScreen> {
     );
   }
 
-  void _handleLogoUpload() {
-    _hasLogoNotifier.value = true;
-    _logoFileNameNotifier.value = 'federation_logo.png';
+  void _handleLogoUpload() async {
+    if (kIsWeb && _logoDropzoneController != null)  {
+      final logoFile = await _logoDropzoneController!.pickFiles(multiple: false, mime: ["image/png", "image/jpeg"]);
+      if(logoFile.isNotEmpty){
+        final file = logoFile[0];
+        final fileName = file.name;
+        final mimeType = await _logoDropzoneController!.getFileMIME(file);
+        
+        if (!_isImageFile(fileName, mimeType: mimeType)) {
+          if(!mounted) return;
+          SnackbarUtils.showCustomToast(context, "Please upload only PNG or JPEG files for logo.");
+          return;
+        }
+        
+        final fileSize = await _logoDropzoneController!.getFileSize(file);
+        if (fileSize > 5 * 1024 * 1024) {
+          if(!mounted) return;
+          SnackbarUtils.showCustomToast(context, "Max file size is 5MB, Please upload logo with less than or equal to 5MB");
+          return;
+        }
+        
+        _logoFile = file;
+        _logoFileName = fileName;
+        _logoFileUrl = await _logoDropzoneController!.createFileUrl(file);
+        _hasLogoNotifier.value = !_hasLogoNotifier.value;
+      }
+    } else {
+      // For non-web platforms, simulate image upload
+      _logoFileName = 'federation_logo.png';
+      _hasLogoNotifier.value = !_hasLogoNotifier.value;
+    }
   }
 
-  void _handleDocumentsUpload() {
-    _hasDocumentsNotifier.value = true;
-    _documentsFileNameNotifier.value = 'federation_documents.pdf';
+  void _handleDocumentsUpload() async {
+    if (kIsWeb && _documentsDropzoneController != null) {
+      final documentFiles = await _documentsDropzoneController!.pickFiles(multiple: true,mime: ["application/pdf"]);
+      if (documentFiles.isNotEmpty) {
+        final file = documentFiles[0];
+        final fileName = file.name;
+        final mimeType = await _documentsDropzoneController!.getFileMIME(file);
+        
+        if (!_isPdfFile(fileName, mimeType: mimeType)) {
+          if(!mounted) return;
+          SnackbarUtils.showCustomToast(context, "Please upload only PDF files for documents.");
+          return;
+        }
+        
+        final fileSize = await _documentsDropzoneController!.getFileSize(file);
+        if (fileSize > 10 * 1024 * 1024) {
+          if(!mounted) return;
+          SnackbarUtils.showCustomToast(context, "Max file size is 10MB, Please upload document with less than or equal to 10MB");
+          return;
+        }
+        
+        _documentsFile = file;
+        _documentsFileName = fileName;
+        _hasDocumentsNotifier.value = !_hasDocumentsNotifier.value;
+      }
+    } else {
+
+    }
+  }
+
+  Future<void> _handleLogoDrop(DropzoneFileInterface file) async {
+    if (_logoDropzoneController == null) return;
+    
+    final fileName = await _logoDropzoneController!.getFilename(file);
+    final fileSize = await _logoDropzoneController!.getFileSize(file);
+    final mimeType = await _logoDropzoneController!.getFileMIME(file);
+    
+    if (!_isImageFile(fileName, mimeType: mimeType)) {
+      if(!mounted) return;
+      SnackbarUtils.showCustomToast(context, "Please upload only PNG or JPEG files for logo.");
+      return;
+    }
+    
+    if (fileSize > 5 * 1024 * 1024) {
+      if(!mounted) return;
+      SnackbarUtils.showCustomToast(context, "Max file size is 5MB, Please upload logo with less than or equal to 5MB");
+      return;
+    }
+    
+    final fileUrl = await _logoDropzoneController!.createFileUrl(file);
+    
+    _logoFile = file;
+    _logoFileUrl = fileUrl;
+    _logoFileName = fileName;
+    _hasLogoNotifier.value = !_hasLogoNotifier.value;
+  }
+
+  Future<void> _handleDocumentsDrop(DropzoneFileInterface file) async {
+    if (_documentsDropzoneController == null) return;
+    
+    final fileName = await _documentsDropzoneController!.getFilename(file);
+    final fileSize = await _documentsDropzoneController!.getFileSize(file);
+    final mimeType = await _documentsDropzoneController!.getFileMIME(file);
+    
+    if (!_isPdfFile(fileName, mimeType: mimeType)) {
+      if(!mounted) return;
+      SnackbarUtils.showCustomToast(context, "Please upload only PDF files for documents. File appears to be renamed or corrupted.");
+      return;
+    }
+    
+    if (fileSize > 10 * 1024 * 1024) {
+      if(!mounted) return;
+      SnackbarUtils.showCustomToast(context, "Max file size is 10MB, Please upload document with less than or equal to 10MB");
+      return;
+    }
+    
+   // setState(() {
+      _documentsFile = file;
+      _documentsFileName = fileName;
+      _hasDocumentsNotifier.value = !_hasDocumentsNotifier.value;
+    ///});
+  }
+
+  bool _isPdfFile(String fileName, {String? mimeType}) {
+    final hasValidExtension = fileName.toLowerCase().endsWith('.pdf');
+    
+    // Check MIME type if available (for web uploads)
+    if (mimeType != null) {
+      final hasValidMimeType = mimeType.toLowerCase() == 'application/pdf';
+      return hasValidExtension && hasValidMimeType;
+    }
+    
+    // For non-web platforms, rely on extension only
+    return hasValidExtension;
+  }
+
+  bool _isImageFile(String fileName, {String? mimeType}) {
+    final lowerFileName = fileName.toLowerCase();
+    final hasValidExtension = lowerFileName.endsWith('.jpg') || 
+                             lowerFileName.endsWith('.jpeg') || 
+                             lowerFileName.endsWith('.png');
+    
+    // Check MIME type if available (for web uploads)
+    if (mimeType != null) {
+      final lowerMimeType = mimeType.toLowerCase();
+      final hasValidMimeType = lowerMimeType == 'image/jpeg' || 
+                              lowerMimeType == 'image/jpg' || 
+                              lowerMimeType == 'image/png';
+      return hasValidExtension && hasValidMimeType;
+    }
+    
+    // For non-web platforms, rely on extension only
+    return hasValidExtension;
   }
 
   void _handleCancel() {
-    context.pop();
+    context.go(RouteName.federations);
+
   }
 
   void _handleCreateFederation() {
@@ -250,10 +398,12 @@ class _AddFederationScreenState extends State<AddFederationScreen> {
     print('City: ${_selectedCityNotifier.value}');
     print('Street: ${_streetAddressController.text}');
     print('Post code: ${_postCodeController.text}');
-    print('Has logo: ${_hasLogoNotifier.value}');
-    print('Has documents: ${_hasDocumentsNotifier.value}');
-    
-    context.pop();
+    print('Logo file: $_logoFileName');
+    print('Documents file: $_documentsFileName');
+
+    showDialog(context: context, builder: (context) {
+      return FederationAddedSuccessfullyDialogWidget();
+    },);
   }
 
   @override
@@ -266,8 +416,6 @@ class _AddFederationScreenState extends State<AddFederationScreen> {
     _selectedCityNotifier.dispose();
     _hasLogoNotifier.dispose();
     _hasDocumentsNotifier.dispose();
-    _logoFileNameNotifier.dispose();
-    _documentsFileNameNotifier.dispose();
     super.dispose();
   }
 }

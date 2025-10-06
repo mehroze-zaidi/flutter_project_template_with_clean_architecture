@@ -44,22 +44,10 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        title != null
-            ? Text(
-                title!,
-                style: AppTextStyles.body2.copyWith(
-                  color: AppColors.neutralColor,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              )
-            : SizedBox.shrink(),
-        title != null? 8.verticalSpace:0.verticalSpace,
+    return
         TextFormField(
+          expands: true,
+          maxLines: null,
           onChanged:onChange ,
           controller: controller,
           validator: validator,
@@ -77,7 +65,7 @@ class CustomTextFormField extends StatelessWidget {
           cursorColor: AppColors.primaryColor,
 
           decoration: InputDecoration(
-            constraints: BoxConstraints(maxHeight: 80,minHeight: 45),
+            constraints: BoxConstraints(maxHeight: 50,minHeight: 45),
             hintText: hintText,
 
             hintStyle: AppTextStyles.cta2.copyWith(
@@ -94,26 +82,25 @@ class CustomTextFormField extends StatelessWidget {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(
-                color: AppColors.secondary200,
+                color: AppColors.neutral200,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(
-                color: AppColors.secondary200,
+                color: AppColors.neutral200,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(
-                color: AppColors.secondary200,
+                color: AppColors.neutral200,
               ),
             ),
 
           ),
-        ),
-      ],
-    );
+        );
+
   }
 }
 

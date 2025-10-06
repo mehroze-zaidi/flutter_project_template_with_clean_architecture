@@ -8,7 +8,8 @@ class AppAssets {
   
   // Icons
   static const String googleIcon = 'assets/images/goole_icon.svg';
-  
+  static const String fileUploadIcon = 'assets/images/upload.svg';
+
   // Navigation Icons
   static const String homeIcon = 'assets/images/home.svg';
   static const String federationIcon = 'assets/images/federation_icon.svg';
@@ -24,4 +25,7 @@ class AppAssets {
   static const String nationalFedTypeIcon = 'assets/images/national_fed_type_icon.png';
   static const String continentalFedTypeIcon = 'assets/images/continental_icon.png';
   static const String regionalFedTypeIcon = 'assets/images/regional.png';
+  
+  // Success Icons
+  static const String successCheckMark = 'assets/images/success_check_mark.png';
 }

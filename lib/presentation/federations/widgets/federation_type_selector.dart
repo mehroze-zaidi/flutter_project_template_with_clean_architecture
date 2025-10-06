@@ -4,6 +4,10 @@ import '../../../core/constants/app_assets.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/extensions/space.dart';
 import '../../../core/theme/app_text_styles.dart';
+import 'add_member_federation_widget.dart';
+import 'add_national_federation_widget.dart';
+import 'select_international_affiliations_widget.dart';
+import 'select_national_affiliations_widget.dart';
 
 class FederationTypeSelector extends StatelessWidget {
   final String? selectedType;
@@ -63,6 +67,47 @@ class FederationTypeSelector extends StatelessWidget {
             ),
           ],
         ),
+        if (selectedType == 'International') ...[
+          24.verticalSpace,
+          Text(
+            'International federations can include national federations as members & oversee their memberships.',
+            style: AppTextStyles.body2.copyWith(
+              color: AppColors.primaryColor,
+            ),
+          ),
+          24.verticalSpace,
+          _buildInlineWidget('International'),
+        ] else if (selectedType == 'National') ...[
+          24.verticalSpace,
+          Text(
+            'Choose international organizations your federation is affiliated with.',
+            style: AppTextStyles.body2.copyWith(
+              color: AppColors.primaryColor,
+            ),
+          ),
+          24.verticalSpace,
+          _buildInlineWidget('National'),
+        ] else if (selectedType == 'Continental') ...[
+          24.verticalSpace,
+          Text(
+            'Continental federations can include national federations as members.',
+            style: AppTextStyles.body2.copyWith(
+              color: AppColors.primaryColor,
+            ),
+          ),
+          24.verticalSpace,
+          _buildInlineWidget('Continental'),
+        ] else if (selectedType == 'Regional') ...[
+          24.verticalSpace,
+          Text(
+            'Select national affiliations for your regional federation.',
+            style: AppTextStyles.body2.copyWith(
+              color: AppColors.primaryColor,
+            ),
+          ),
+          24.verticalSpace,
+          _buildInlineWidget('Regional'),
+        ],
       ],
     );
   }
@@ -71,7 +116,9 @@ class FederationTypeSelector extends StatelessWidget {
     final isSelected = selectedType == value;
     
     return GestureDetector(
-      onTap: () => onTypeSelected(value),
+      onTap: () {
+        onTypeSelected(value);
+      },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
@@ -103,4 +150,30 @@ class FederationTypeSelector extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildInlineWidget(String type) {
+    if (type == 'International') {
+      return AddMemberFederationWidget(
+        onCancel: () {},
+        onAddSelected: (selectedMembers) {},
+      );
+    } else if (type == 'National') {
+      return SelectInternationalAffiliationsWidget(
+        onSkip: () {},
+        onContinue: (selectedAffiliations) {},
+      );
+    } else if (type == 'Continental') {
+      return AddNationalFederationWidget(
+        onCancel: () {},
+        onAddSelected: (selectedNationalFederations) {},
+      );
+    } else if (type == 'Regional') {
+      return SelectNationalAffiliationsWidget(
+        onSkip: () {},
+        onContinue: (selectedAffiliations) {},
+      );
+    }
+    return SizedBox.shrink();
+  }
+
 }

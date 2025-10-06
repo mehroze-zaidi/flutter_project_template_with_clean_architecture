@@ -15,6 +15,7 @@ class CustomButton extends StatelessWidget {
   final Function()? onTap;
   final bool isLoading;
   final bool isLeadingIcon;
+  final bool isSecondaryBtn;
 
   const CustomButton({
     super.key,
@@ -26,27 +27,38 @@ class CustomButton extends StatelessWidget {
     this.onTap,
     this.isLoading = false,
     this.isLeadingIcon = true,
+    this.isSecondaryBtn = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color:   isLoading
-          ? (buttonColor ?? AppColors.primaryColor).withValues(alpha:.6 )
-          : buttonColor ?? AppColors.primaryColor,
+      color: isLoading
+          ? AppColors.greyColor
+          : isSecondaryBtn
+          ? AppColors.primary50
+          : AppColors.primaryColor,
 
-      shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(8.r),side: BorderSide(color: borderColor ?? AppColors.transparentColor )),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        // side:isSecondaryBtn?BorderSide.none: BorderSide(color:  borderColor ?? AppColors.transparentColor),
+      ),
       child: InkWell(
         onTap: isLoading ? null : onTap,
-        splashColor: ( titleColor ?? AppColors.baseWhiteColor).withValues(alpha: .4),
-       // highlightColor: (titleColor ?? AppColors.baseWhiteColor).withOpacity(0.1),
+        splashColor: (titleColor ?? AppColors.baseWhiteColor).withValues(
+          alpha: .4,
+        ),
+        // highlightColor: (titleColor ?? AppColors.baseWhiteColor).withOpacity(0.1),
         child: Container(
-          height: 57.h,
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          height: 57,
 
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          // color:  isSecondaryBtn?AppColors.primary50:null,
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: icon !=null?MainAxisAlignment.spaceBetween: MainAxisAlignment.center,
+            mainAxisAlignment: icon != null
+                ? MainAxisAlignment.spaceBetween
+                : MainAxisAlignment.center,
             children: [
               if (isLoading)
                 SizedBox(
@@ -60,16 +72,16 @@ class CustomButton extends StatelessWidget {
                   ),
                 )
               else ...[
-                if (icon != null && isLeadingIcon)
-                  icon,
+                if (icon != null && isLeadingIcon) icon,
                 Text(
                   title,
                   style: AppTextStyles.cta2.copyWith(
-                    color: titleColor ?? AppColors.baseWhiteColor,
+                    color: isSecondaryBtn
+                        ? AppColors.primaryColor
+                        : AppColors.baseWhiteColor,
                   ),
                 ),
-                if (icon != null && !isLeadingIcon)
-                  icon
+                if (icon != null && !isLeadingIcon) icon,
               ],
             ],
           ),
@@ -85,6 +97,7 @@ class SocialButton extends StatelessWidget {
   final String title;
   final Color? buttonColor;
   final Color? titleColor;
+
   const SocialButton({
     Key? key,
     required this.onPressed,

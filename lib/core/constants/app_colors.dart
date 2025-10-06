@@ -18,6 +18,7 @@ class AppColors {
   static const Color bgColor = Color(0XFFEFF0F2);
   static const Color baseBlackColor = Color(0XFF030712);
   static const Color primaryColor = Color(0XFFAD0202);
+  static const Color primary50 = Color(0XFFFFDCDC);
   static const Color greyColor = Color(0XFF938c8c);
   static const Color positive100Color = Color(0XFFD0F5E1);
   static const Color secondaryColor = Color(0XFF000000);
@@ -35,6 +36,7 @@ class AppColors {
   static const Color neutral900 = Color(0XFF271A1A);
   static const Color neutral50 = Color(0XFFF8F7F7);
   static const Color neutral200 = Color(0XFFD6D4D4);
+  static const Color neutral100 = Color(0XFFE7E6E6);
   static const Color lightRed = Color(0XFFFFF5F5);
 
   static const  black26 =  Colors.black26;
